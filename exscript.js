@@ -106,8 +106,14 @@ eyes.forEach(eye => {
 /**
  * Générateur de mot de passe 
  * 
- * 
  */
+const link = document.querySelector("#generatePwd");
+link.addEventListener("click", () => {
+    const passGenerate = generatePassword(12);
+
+    const result = document.querySelector("#resultPassword");
+    result.innerText = passGenerate; 
+});
 
 
 
@@ -209,8 +215,23 @@ let showHidePassword = (element) => {
     return type;
     */
 };
-    
+/**
+ * Générateur de mot de passe  
+ * @param {int} min
+ * @returns {string}
+ * 
+ * generatePassword = génère un code aléatoire
+ */
+const generatePassword = (min= 18) => {
 
+    const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@&-!?#+=*/";
+    let password = "";
+
+    for (let i = 0; i <min; i++) {
+        password += letters.charAt(Math.floor(math.random() * letters.length));
+    }
+    return password;
+}
 
 
  
