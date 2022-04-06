@@ -7,7 +7,7 @@ const lastName = document.querySelector("#lastname");
 
 // Applique un écouteur d'évènement sur les chamgements
 // effectués dans le champs
-lastName.addEventListener(`input`, () => {                  //écouter d'événement
+lastName.addEventListener("input", () => {                  //écouter d'événement
     
     //Vérifie si le champs est vide ou pas
     const response = notEmpty(lastName.value);
@@ -18,7 +18,7 @@ lastName.addEventListener(`input`, () => {                  //écouter d'événe
 //Le prénom//
 const firstName = document.querySelector("#firstname");
 
-firstName.addEventListener(`input`, () => {
+firstName.addEventListener("input", () => {
 
     const response = notEmpty(firstName.value);
     isError("Votre prénom est obligatoire", response, "firstname");
@@ -27,7 +27,7 @@ firstName.addEventListener(`input`, () => {
 //Le pseudo
 const Pseudo = document.querySelector("#pseudo");
 
-Pseudo.addEventListener(`input`, () => {
+Pseudo.addEventListener("input", () => {
 
     const response = notEmpty(Pseudo.value);
     isError("Le pseudo est obligatoire", response, "pseudo");
@@ -43,7 +43,7 @@ Pseudo.addEventListener(`input`, () => {
 //Le mail
 const mail = document.querySelector("#email");
 
-mail.addEventListener(`input`,() => {
+mail.addEventListener("input",() => {
 
     const response = notEmpty(mail.value);
     isError("Votre Adresse e-mail est obligatoire", response, "email");
@@ -58,7 +58,7 @@ mail.addEventListener(`input`,() => {
 //Le mot de passe
 const password = document.querySelector("#password");
 
-password.addEventListener(`input`,() => {
+password.addEventListener("input",() => {
 
     const response = notEmpty(password.value);
     isError("Votre mot de passe est obligatoire", response, "password");
@@ -70,21 +70,44 @@ password.addEventListener(`input`,() => {
 
 });
 // Confirme le Mot de Passe
-const confirmpassword = document.querySelector("#confirmpassword");
+const confirmpassword = document.querySelector("#confirmPassword");
 
-confirmpassword.addEventListener(`input`,() => {
+confirmpassword.addEventListener("input",() => {
 
     const response = notEmpty(confirmpassword.value);
-    isError("Votre mot de passe est obligatoire", response, "confirmpassword");
+    isError("Votre mot de passe est obligatoire", response, "confirmPassword");
 
     if (response) {
-        const length = isLength(confirmpassword.value, 6);
-        isError("Le mots de passe doit être le même.", length, "confirmpassword");
+        const equal = isEqual(password.value, confirmpassword.value);
+        isError("Le mots de passe doit être le même.", equal, "confirmPassword");
     }
 
 });
+//Empêche de coller une valeur dans le champs
+confirmpassword.addEventListener("paste", (event) => {
+    event.preventDefault();
+})
 
+//Clic sur l'icon  class="bi-eye" et le champs deviens visible
+const eyes = document.querySelectorAll(".view-password");
 
+//Aplique un écouteur d'événement à chaque éléments récupérés
+eyes.forEach(eye => {
+    eye.addEventListener("click", () => {
+
+        //Appelle une fonction permettant apparaitre/disparaitre le mot de pass
+         // "previousElementSibling" permet de récupérer l'élément du DOM juste au dessus
+        let input = eye.previousElementSibling;        
+        let type = showHidePassword(input);
+        input.type = type;
+    })
+})
+
+/**
+ * Générateur de mot de passe 
+ * 
+ * 
+ */
 
 
 
@@ -154,8 +177,38 @@ const isEmail = (value) => {
     return pattern.test(value);
 
 }
+/**
+ * Vérifier si 2 chaines de caractaire son identique
+ * 
+ * @param {string|int} value
+ * @param {string|int} confirmValue                     //int = nombre/valeur
+ * @returns {boolean} 
+ */
 
+const isEqual = (value, confirmValue) => {
+    return value === confirmValue;
+}
 
+/**
+ * Affiche/cache le mot de passe
+ * 
+ * @param {Element} element
+ */
+let showHidePassword = (element) => {
+    // if ternaire
+    return (element.type === "password") ? "text" : "password";
+    
+   /*
+    let type;
+    if (element.type == "password") {
+        element.type = "text";
+    }                                   //ou///////
+    else {
+        element.type = "password";
+    }
+    return type;
+    */
+};
     
 
 
