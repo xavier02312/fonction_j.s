@@ -228,10 +228,10 @@ const generatePassword = (min= 18) => {
     let password = "";
 
     for (let i = 0; i <min; i++) {
-        password += letters.charAt(Math.floor(math.random() * letters.length));
+        password += letters.charAt(Math.floor(Math.random() * letters.length));
     }
     return password;
-}
+};
 
 
  
